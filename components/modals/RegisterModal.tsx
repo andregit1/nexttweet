@@ -4,6 +4,7 @@ import Input from '../Input';
 import Modal from '../layout/Modal';
 import useRegisterModal from '@/hooks/useRegisterModal';
 import useLoginModal from '@/hooks/useLoginModal';
+import axios from 'axios';
 
 const RegisterModal = () => {
   const loginModal = useLoginModal()
@@ -26,7 +27,7 @@ const RegisterModal = () => {
     try {
       setIsLoading(true)
       
-      // add register and login
+      await axios.post('/api/register', { email, password, username, name })
 
       registerModal.onClose()
     } catch (error) {
@@ -34,7 +35,7 @@ const RegisterModal = () => {
     } finally {
       setIsLoading(false)
     }
-  }, [registerModal])
+  }, [registerModal, email, password, username, name])
 
 
   const bodyContent = (
