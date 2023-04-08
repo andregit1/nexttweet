@@ -19,13 +19,15 @@ const Sidebar = () => {
     {
       label: 'Notification',
       href: '/notification',
-      icon: BsBellFill
+      icon: BsBellFill,
+      auth: true
     },
 
     {
       label: 'Profile',
       href: '/users/123',
-      icon: FaUser
+      icon: FaUser,
+      auth: true
     }
   ]
 
@@ -35,7 +37,7 @@ const Sidebar = () => {
         <div className="space-y-2 lg:w-[230px]">
           <SidebarLogo />
           {items.map((item) => (
-            <SidebarItem key={item.href} href={item.href} label={item.label} icon={item.icon} />
+            <SidebarItem key={item.href} href={item.href} label={item.label} icon={item.icon} auth={item.auth} />
           ))}
           { currentUser && (<SidebarItem onClick={() => signOut()} icon={BiLogOut} label="Logout" href="/" />) }
           <SidebarTweetButton />
