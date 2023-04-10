@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt"
-import prismadb from "@/libs/prismadb"
+import prisma from "@/libs/prismadb"
 import serverAuth from "@/libs/serverAuth";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -8,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     
-    const users = await prismadb.user.findMany({
+    const users = await prisma.user.findMany({
       orderBy: { createdAt: 'desc' }
     })
 
