@@ -14,21 +14,21 @@ const EditModal = () => {
   const { mutate: mutateFetchedUser } = useUser(currentUser?.id)
   const editModal = useEditModal()
 
-  const [profileImg, setProfileImg] = useState("")
-  const [coverImg, setCoverImg] = useState("")
+  const [profileImage, setProfileImg] = useState("")
+  const [coverImage, setCoverImg] = useState("")
   const [name, setName] = useState("")
   const [username, setUsername] = useState("")
   const [bio, setBio] = useState("")
 
   useEffect(() => {
-    setProfileImg(currentUser?.profileImg)
-    setCoverImg(currentUser?.coverImg)
+    setProfileImg(currentUser?.profileImage)
+    setCoverImg(currentUser?.coverImage)
     setName(currentUser?.name)
     setUsername(currentUser?.username)
     setBio(currentUser?.bio)
   }, [
-    currentUser?.profileImg,
-    currentUser?.coverImg,
+    currentUser?.profileImage,
+    currentUser?.coverImage,
     currentUser?.name,
     currentUser?.username,
     currentUser?.bio
@@ -40,7 +40,7 @@ const EditModal = () => {
     try {
       setIsLoading(true)
 
-      await axios.patch('/api/edit', { coverImg, profileImg, name, username, bio })
+      await axios.patch('/api/edit', { coverImage, profileImage, name, username, bio })
 
       mutateFetchedUser()
 
@@ -53,12 +53,12 @@ const EditModal = () => {
     } finally {
       setIsLoading(false)
     }
-  }, [coverImg, profileImg, name, username, bio, editModal, mutateFetchedUser])
+  }, [coverImage, profileImage, name, username, bio, editModal, mutateFetchedUser])
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <ImageUpload value={coverImg} disabled={isLoading} onChange={(image) => setCoverImg(image)} label="Upload Cover Image" />
-      <ImageUpload value={profileImg} disabled={isLoading} onChange={(image) => setProfileImg(image)} label="Upload Profile Image" />
+      <ImageUpload value={coverImage} disabled={isLoading} onChange={(image) => setCoverImg(image)} label="Upload Cover Image" />
+      <ImageUpload value={profileImage} disabled={isLoading} onChange={(image) => setProfileImg(image)} label="Upload Profile Image" />
       <Input placeholder="Name" onChange={(e) => setName(e.target.value)} value={name} disabled={isLoading} />
       <Input placeholder="Username" onChange={(e) => setUsername(e.target.value)} value={username} disabled={isLoading} />
       <Input placeholder="Bio" onChange={(e) => setBio(e.target.value)} value={bio} disabled={isLoading} />
