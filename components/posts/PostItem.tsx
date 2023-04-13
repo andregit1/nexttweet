@@ -71,7 +71,7 @@ function PostItem({data, userId}: PostItemProps) {
             </div>
 
             <div onClick={onLike} className="flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500">
-              <LikeIcon size={25} />
+              <LikeIcon size={25} color={ hasLiked ? 'red' : '' } />
               <p>{data.likedIds.length}</p>
             </div>
           </div>
