@@ -7,6 +7,7 @@ import { useCallback, useState } from "react"
 import { toast } from "react-hot-toast"
 import Button from "./Button"
 import Avatar from "./Avatar"
+import usePost from "@/hooks/usePost"
 
 interface FormProps {
   placeholder: string
@@ -19,6 +20,7 @@ function Form({placeholder, isComment, postId}: FormProps) {
   const loginModal = useLoginModal()
   const { data: currentUser } = useCurrentUser()
   const { mutate: mutatePosts } =  usePosts()
+  const { mutate: mutatePost } = usePost(postId as string)
 
   const [bodyPost, setBodyPost] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -27,21 +29,22 @@ function Form({placeholder, isComment, postId}: FormProps) {
     try {
       setIsLoading(true)
 
-      await axios.post('/api/posts', { body: bodyPost })
+      const url = isComment ? `/api/comments?postId=${postId}` : '/api/posts'
+
+      await axios.post(url, { body: bodyPost })
 
       toast.success('Tweet created')
 
       setBodyPost('')
-
       mutatePosts()
-
+      mutatePost()
     } catch (error) {
       console.log(error)
       toast.error('Something went wrong')
     } finally {
       setIsLoading(false)
     }
-  }, [bodyPost, mutatePosts])
+  }, [bodyPost, mutatePosts, mutatePost, isComment, postId])
 
   return (
     <div className="border-b-[1px] border-neutral-800 px-5 py-2">
@@ -57,7 +60,7 @@ function Form({placeholder, isComment, postId}: FormProps) {
               value={bodyPost}
               className="
                 disabled:opacity-80 peer resize-none mt-3 w-full bg-black ring-0 outline-none text-[20px]
-                placeholder-neutral-500 text-red-500
+                placeholder-neutral-500 text-white
               "
               placeholder={placeholder}
             ></textarea>
