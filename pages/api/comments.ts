@@ -14,36 +14,36 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const comment = await prisma.comment.create({ data: { body, userId: currentUser.id, postId } });
 
-    // NOTIFICATION PART START
-    try {
-      const post = await prisma.post.findUnique({
-        where: {
-          id: postId,
-        }
-      });
+    // // NOTIFICATION PART START
+    // try {
+    //   const post = await prisma.post.findUnique({
+    //     where: {
+    //       id: postId,
+    //     }
+    //   });
 
-      if (post?.userId) {
-        await prisma.notification.create({
-          data: {
-            body: 'Someone replied on your tweet!',
-            userId: post.userId
-          }
-        });
+    //   if (post?.userId) {
+    //     await prisma.notification.create({
+    //       data: {
+    //         body: 'Someone replied on your tweet!',
+    //         userId: post.userId
+    //       }
+    //     });
 
-        await prisma.user.update({
-          where: {
-            id: post.userId
-          },
-          data: {
-            hasNotification: true
-          }
-        });
-      }
-    }
-    catch (error) {
-      console.log(error);
-    }
-    // NOTIFICATION PART END
+    //     await prisma.user.update({
+    //       where: {
+    //         id: post.userId
+    //       },
+    //       data: {
+    //         hasNotification: true
+    //       }
+    //     });
+    //   }
+    // }
+    // catch (error) {
+    //   console.log(error);
+    // }
+    // // NOTIFICATION PART END
 
     return res.status(200).json(comment);
   } catch (error) {
