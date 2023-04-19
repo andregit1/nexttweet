@@ -26,8 +26,8 @@ model User {
   followingIds String[] @db.ObjectId
   hasNotification Boolean?
 
-  posts Post[]
-  comments Comment[]
+  posts         Post[]
+  comments      Comment[]
   notifications Notification[]
 }
 

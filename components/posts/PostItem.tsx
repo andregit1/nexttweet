@@ -12,7 +12,7 @@ interface PostItemProps {
   userId?: string
 }
 
-function PostItem({data, userId}: PostItemProps) {
+function PostItem({data = {}, userId}: PostItemProps) {
   const router = useRouter()
   const loginModal = useLoginModal()
 

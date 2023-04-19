@@ -19,7 +19,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     let updatedLikeIds = [...(post.likedIds || [])]
 
-    if (req.method !== 'POST') updatedLikeIds.push(currentUser.id)
+    if (req.method !== 'POST') {
+      updatedLikeIds.push(currentUser.id)
+
+      const post = await prisma.post.findUnique({ where: { id: postId } })
+
+      if (post?.userId) {
+        await prisma.notification.create({
+          data: { body: 'Someone liked your tweet!', userId: post.userId }
+        });
+
+        await prisma.user.update({
+          where: { id: post.userId }, data: { hasNotification: true }
+        });
+      }
+    }
 
     if (req.method !== 'DELETE') updatedLikeIds = updatedLikeIds.filter((likeId) => likeId !== currentUser.id)
 

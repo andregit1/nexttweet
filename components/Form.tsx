@@ -8,6 +8,7 @@ import { toast } from "react-hot-toast"
 import Button from "./Button"
 import Avatar from "./Avatar"
 import usePost from "@/hooks/usePost"
+import { BiImage } from "react-icons/bi"
 
 interface FormProps {
   placeholder: string
@@ -67,8 +68,9 @@ function Form({placeholder, isComment, postId}: FormProps) {
 
             <hr className="opacity-0 peer-focus:opacity-100 h-[1px] w-full border-red-800 transition" />
 
-            <div className="mt-4 flex flex-row justify-end">
-            <Button disabled={isLoading || !bodyPost} label="Tweet" onClick={onSubmit} />
+            <div className="mt-4 flex flex-row justify-between">
+              <BiImage size={30} className="text-red-500 cursor-pointer" />
+              <Button disabled={isLoading || !bodyPost} label="Tweet" onClick={onSubmit} />
             </div>
           </div>
         </div> 
