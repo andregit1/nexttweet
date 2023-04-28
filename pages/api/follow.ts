@@ -10,12 +10,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const { currentUser } = await serverAuth(req, res);
-    const { userId } = req.body
-    console.log("req.query", req.query.userId)
-    console.log("req.body", req.body)
-    console.log("req.body.data", req.body.data)
-    console.log("req.body.data.userId", req.body.data.userId)
-
+    // const { userId } = req.body
+    const { userId } = req.method === 'POST' ? req.body : req.query;
+    
     if (!userId || typeof userId !== 'string') {
       console.log("userId", userId)
       throw new Error('Invalid ID - userId from useFollow');
